@@ -1,4 +1,4 @@
-FROM scratch
+FROM debian:bullseye-slim
 
 WORKDIR /app
 

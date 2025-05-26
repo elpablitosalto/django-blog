@@ -1,4 +1,4 @@
-FROM scratch
+FROM debian:bullseye-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
