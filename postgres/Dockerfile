@@ -9,8 +9,11 @@ RUN apt-get update && apt-get install -y \
     postgresql-contrib \
     && rm -rf /var/lib/apt/lists/*
 
-# Create the directory for PostgreSQL data
-RUN mkdir -p "$PGDATA" \
+# Create directories for PostgreSQL data
+RUN mkdir -p /var/lib/postgresql/13/main \
+    && chown -R postgres:postgres /var/lib/postgresql/13/main \
+    && chmod 700 /var/lib/postgresql/13/main \
+    && mkdir -p "$PGDATA" \
     && chown -R postgres:postgres "$PGDATA" \
     && chmod 700 "$PGDATA"
 
