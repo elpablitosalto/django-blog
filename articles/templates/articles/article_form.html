@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}{{ view.object.title|default:'New Article' }}{% endblock %}
+{% block content %}
+<h1>{% if view.object %}Edit Article{% else %}New Article{% endif %}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-success" type="submit">Save</button>
+    <a class="btn btn-link" href="{% url 'article-list' %}">Cancel</a>
+</form>
+{% endblock %} 
