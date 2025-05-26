@@ -1,6 +1,108 @@
 # Django Blog
 
-A simple blog platform built with Django, supporting article creation, editing, deletion, and user authentication.
+A modern blog application built with Django.
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Docker
+- Docker Compose
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd django-blog
+```
+
+2. Create a `.env` file with the following content:
+```
+DEBUG=0
+SECRET_KEY=your-secret-key
+ALLOWED_HOSTS=localhost,127.0.0.1
+DATABASE_URL=postgres://blog:blog@db:5432/blog
+```
+
+3. Build and start the containers in detached mode:
+```bash
+docker compose up -d
+```
+
+4. Apply database migrations:
+```bash
+docker compose exec web python manage.py migrate
+```
+
+5. Create a superuser (optional):
+```bash
+docker compose exec web python manage.py createsuperuser
+```
+
+### Accessing the Application
+
+- Blog: http://localhost:8081
+- Admin panel: http://localhost:8081/admin
+
+### Development
+
+To view logs:
+```bash
+docker compose logs -f
+```
+
+To stop the application:
+```bash
+docker compose down
+```
+
+To rebuild and restart:
+```bash
+docker compose up -d --build
+```
+
+### Common Issues and Solutions
+
+#### Running Commands After Container Start
+If you see the message "w Enable Watch" or need to run additional commands:
+
+1. Press `Ctrl+C` to exit the current process
+2. Start containers in detached mode:
+```bash
+docker compose up -d
+```
+3. Run your command (e.g., migrations):
+```bash
+docker compose exec web python manage.py migrate
+```
+
+#### Database Connection Issues
+If you see "password authentication failed" or other database connection errors:
+
+1. Stop all containers and remove volumes:
+```bash
+docker compose down -v
+```
+
+2. Verify your `.env` file has the correct database URL:
+```
+DATABASE_URL=postgres://blog:blog@db:5432/blog
+```
+
+3. Restart the containers:
+```bash
+docker compose up -d
+```
+
+4. Apply migrations:
+```bash
+docker compose exec web python manage.py migrate
+```
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Features
 - User registration, login, logout
@@ -75,6 +177,8 @@ A simple blog platform built with Django, supporting article creation, editing, 
 
 4. **Apply migrations and create a superuser inside the web container:**
    ```bash
+   Ctrl+C
+   docker compose up -d
    docker compose exec web python manage.py migrate
    docker compose exec web python manage.py createsuperuser
    ```
