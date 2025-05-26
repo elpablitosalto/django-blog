@@ -37,21 +37,54 @@ A simple blog platform built with Django, supporting article creation, editing, 
 
 ## Docker/PostgreSQL Deployment
 
-1. **Copy `.env.example` to `.env` and set your secrets and DB credentials.**
-2. **Build and start the containers:**
+1. **Install Docker and Docker Compose (if not already installed):**
    ```bash
-   docker-compose up --build
+   # Create directory for Docker's GPG key
+   mkdir -p /etc/apt/keyrings
+
+   # Add Docker's official GPG key
+   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg.new && \
+   mv /etc/apt/keyrings/docker.gpg.new /etc/apt/keyrings/docker.gpg
+   chmod a+r /etc/apt/keyrings/docker.gpg
+
+   # Add the repository to Apt sources
+   echo \
+     "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+     "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+     tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+   # Update package index and install Docker
+   apt update
+   apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+   # Verify installation
+   docker --version
+   docker compose version
    ```
-3. **Apply migrations and create a superuser inside the web container:**
+
+2. **Copy `.env.example` to `.env` and set your secrets and DB credentials:**
    ```bash
-   docker-compose exec web python manage.py migrate
-   docker-compose exec web python manage.py createsuperuser
+   cp .env.example .env
+   # Edit .env with your settings
    ```
-4. **Collect static files:**
+
+3. **Build and start the containers (using local images):**
    ```bash
-   docker-compose exec web python manage.py collectstatic --noinput
+   docker compose up --build
    ```
-5. Visit your domain (e.g. `http://django-blog.pavel-khmelev-portfolio.webtm.ru/`)
+
+4. **Apply migrations and create a superuser inside the web container:**
+   ```bash
+   docker compose exec web python manage.py migrate
+   docker compose exec web python manage.py createsuperuser
+   ```
+
+5. **Collect static files:**
+   ```bash
+   docker compose exec web python manage.py collectstatic --noinput
+   ```
+
+6. Visit your domain (e.g. `http://django-blog.pavel-khmelev-portfolio.webtm.ru/`)
 
 ## Default Accounts
 - Admin: created via `createsuperuser`
