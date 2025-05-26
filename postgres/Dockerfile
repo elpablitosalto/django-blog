@@ -15,13 +15,14 @@ RUN chmod +x /docker-entrypoint-initdb.d/init.sh
 RUN mkdir -p /var/lib/postgresql/13/main \
     && chown -R postgres:postgres /var/lib/postgresql/13/main
 
-# Initialize the database
-RUN su - postgres -c "/usr/lib/postgresql/13/bin/initdb -D /var/lib/postgresql/13/main"
+# Create entrypoint script
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 5432
 
 # Switch to postgres user
 USER postgres
 
-# Use the correct path to postgres executable
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/lib/postgresql/13/bin/postgres", "-D", "/var/lib/postgresql/13/main"] 
