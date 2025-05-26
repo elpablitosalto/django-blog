@@ -15,6 +15,9 @@ RUN chmod +x /docker-entrypoint-initdb.d/init.sh
 RUN mkdir -p /var/lib/postgresql/13/main \
     && chown -R postgres:postgres /var/lib/postgresql/13/main
 
+# Initialize the database
+RUN su - postgres -c "/usr/lib/postgresql/13/bin/initdb -D /var/lib/postgresql/13/main"
+
 EXPOSE 5432
 
 # Switch to postgres user
