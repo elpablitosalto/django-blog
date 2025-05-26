@@ -62,29 +62,38 @@ A simple blog platform built with Django, supporting article creation, editing, 
    docker compose version
    ```
 
-2. **Copy `.env.example` to `.env` and set your secrets and DB credentials:**
+2. **Prepare local Ubuntu image:**
+   ```bash
+   # Check available Ubuntu images
+   docker images | grep ubuntu
+
+   # If no Ubuntu image is available, create one from your system
+   docker import /var/lib/dpkg/status ubuntu:local
+   ```
+
+3. **Copy `.env.example` to `.env` and set your secrets and DB credentials:**
    ```bash
    cp .env.example .env
    # Edit .env with your settings
    ```
 
-3. **Build and start the containers (using local images):**
+4. **Build and start the containers (using local images):**
    ```bash
    docker compose up --build
    ```
 
-4. **Apply migrations and create a superuser inside the web container:**
+5. **Apply migrations and create a superuser inside the web container:**
    ```bash
    docker compose exec web python manage.py migrate
    docker compose exec web python manage.py createsuperuser
    ```
 
-5. **Collect static files:**
+6. **Collect static files:**
    ```bash
    docker compose exec web python manage.py collectstatic --noinput
    ```
 
-6. Visit your domain (e.g. `http://django-blog.pavel-khmelev-portfolio.webtm.ru/`)
+7. Visit your domain (e.g. `http://django-blog.pavel-khmelev-portfolio.webtm.ru/`)
 
 ## Default Accounts
 - Admin: created via `createsuperuser`
