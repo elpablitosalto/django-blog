@@ -18,12 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from articles.views import ArticleListView, ArticleDetailView, ArticleCreateView, ArticleUpdateView, ArticleDeleteView, SignUpView
+from articles.views import ArticleListView, ArticleDetailView, ArticleCreateView, ArticleUpdateView, ArticleDeleteView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/signup/', SignUpView.as_view(), name='signup'),
     path('accounts/profile/', ArticleListView.as_view(), name='profile'),  # Временно перенаправляем на список статей
     path('', ArticleListView.as_view(), name='article-list'),
     path('article/<int:pk>/', ArticleDetailView.as_view(), name='article-detail'),
