@@ -1,13 +1,6 @@
-FROM debian:bullseye-slim
+FROM postgres:13
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Install PostgreSQL
-RUN apt-get update && apt-get install -y \
-    postgresql \
-    postgresql-contrib \
-    && rm -rf /var/lib/apt/lists/*
-
+# Copy initialization script
 COPY init.sh /docker-entrypoint-initdb.d/
 RUN chmod +x /docker-entrypoint-initdb.d/init.sh
 
