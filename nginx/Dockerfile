@@ -1,7 +1,8 @@
-FROM ubuntu:local
+FROM scratch
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Install Nginx
 RUN apt-get update && apt-get install -y \
     nginx \
     && rm -rf /var/lib/apt/lists/*

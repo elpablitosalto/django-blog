@@ -1,7 +1,8 @@
-FROM ubuntu:local
+FROM scratch
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Install PostgreSQL
 RUN apt-get update && apt-get install -y \
     postgresql \
     postgresql-contrib \
