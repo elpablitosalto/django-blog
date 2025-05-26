@@ -13,4 +13,4 @@ RUN chmod +x /docker-entrypoint-initdb.d/init.sh
 
 EXPOSE 5432
 
-CMD ["postgres", "-D", "/var/lib/postgresql/data"] 
+CMD ["/usr/lib/postgresql/13/bin/postgres", "-D", "/var/lib/postgresql/13/main"] 
