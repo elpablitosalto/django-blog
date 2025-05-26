@@ -178,6 +178,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 4. **Apply migrations and create a superuser inside the web container:**
    ```bash
    Ctrl+C
+   docker compose down -v
    docker compose up -d
    docker compose exec web python manage.py migrate
    docker compose exec web python manage.py createsuperuser

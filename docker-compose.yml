@@ -7,6 +7,8 @@ services:
       - static_volume:/app/staticfiles
     expose:
       - 8000
+    environment:
+      - DJANGO_ALLOWED_HOSTS=django-blog.pavel-khmelev-portfolio.webtm.ru localhost 127.0.0.1 [::1]
     env_file:
       - .env
     depends_on:
